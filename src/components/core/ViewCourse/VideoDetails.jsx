@@ -47,7 +47,6 @@ const VideoDetails = () => {
     })()
   }, [courseSectionData, courseEntireData, location.pathname])
 
-  // check if the lecture is the first video of the course
   const isFirstVideo = () => {
     const currentSectionIndx = courseSectionData.findIndex(
       (data) => data._id === sectionId
@@ -64,7 +63,6 @@ const VideoDetails = () => {
     }
   }
 
-  // go to the next video
   const goToNextVideo = () => {
     // console.log(courseSectionData)
 
@@ -99,7 +97,6 @@ const VideoDetails = () => {
     }
   }
 
-  // check if the lecture is the last video of the course
   const isLastVideo = () => {
     const currentSectionIndx = courseSectionData.findIndex(
       (data) => data._id === sectionId
@@ -122,7 +119,6 @@ const VideoDetails = () => {
     }
   }
 
-  // go to the previous video
   const goToPrevVideo = () => {
     // console.log(courseSectionData)
 
@@ -168,6 +164,13 @@ const VideoDetails = () => {
     setLoading(false)
   }
 
+  const getVideoUrl = (url) => {
+    if (url.endsWith('.ts')) {
+      return url.replace(/\.ts$/, '.mp4');
+    }
+    return url;
+  };
+
   return (
     <div className="flex flex-col gap-5 text-white">
       {!videoData ? (
@@ -182,7 +185,7 @@ const VideoDetails = () => {
           aspectRatio="16:9"
           playsInline
           onEnded={() => setVideoEnded(true)}
-          src={videoData?.videoUrl}
+          src={getVideoUrl(videoData?.videoUrl)}
         >
           <BigPlayButton position="center" />
           {/* Render When Video Ends */}
@@ -206,7 +209,6 @@ const VideoDetails = () => {
                 disabled={loading}
                 onclick={() => {
                   if (playerRef?.current) {
-                    // set the current time of the video to 0
                     playerRef?.current?.seek(0)
                     setVideoEnded(false)
                   }
