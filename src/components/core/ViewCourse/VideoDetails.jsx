@@ -185,7 +185,7 @@ const VideoDetails = () => {
           aspectRatio="16:9"
           playsInline
           onEnded={() => setVideoEnded(true)}
-          src={getVideoUrl(videoData?.videoUrl)}
+          src={videoData?.videoUrl && getVideoUrl(videoData?.videoUrl)}
         >
           <BigPlayButton position="center" />
           {/* Render When Video Ends */}
